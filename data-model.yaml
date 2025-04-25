@@ -1,0 +1,33 @@
+tables:
+  - name: users
+    description: Stores registered users of the application.
+    columns:
+      - name: id
+        type: SERIAL
+        primary_key: true
+      - name: name
+        type: VARCHAR(100)
+        description: Full name of the user
+      - name: email
+        type: VARCHAR(100)
+        description: Email address, must be unique
+      - name: created_at
+        type: TIMESTAMP
+        default: CURRENT_TIMESTAMP
+
+  - name: orders
+    description: Contains purchase orders by users.
+    columns:
+      - name: id
+        type: SERIAL
+        primary_key: true
+      - name: user_id
+        type: INTEGER
+        foreign_key: users.id
+      - name: product_name
+        type: VARCHAR(100)
+      - name: amount
+        type: NUMERIC
+      - name: order_date
+        type: TIMESTAMP
+        default: CURRENT_TIMESTAMP
