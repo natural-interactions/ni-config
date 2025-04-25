@@ -1,1 +1,122 @@
-
+{
+  "components": {
+    "input": {
+      "shadcn_component": "Input",
+      "default_props": { "type": "text" },
+      "className": "w-full rounded border px-3 py-2",
+      "view_modes": {
+        "create": { "className": "bg-white" },
+        "edit": { "className": "bg-yellow-50" },
+        "read": { "className": "bg-gray-100 text-gray-500", "props": { "readOnly": true } },
+        "delete": { "className": "bg-red-100", "props": { "readOnly": true } }
+      }
+    },
+    "password": {
+      "shadcn_component": "Input",
+      "default_props": { "type": "password" },
+      "className": "w-full border px-3 py-2",
+      "view_modes": {
+        "create": { "className": "bg-white" },
+        "edit": { "className": "bg-yellow-50" },
+        "read": { "className": "bg-gray-100 text-gray-400", "props": { "readOnly": true } },
+        "delete": { "className": "bg-red-100", "props": { "readOnly": true } }
+      }
+    },
+    "dropdown": {
+      "shadcn_component": "Select",
+      "default_props": { "options": [] },
+      "className": "w-full px-2 py-2",
+      "view_modes": {
+        "create": { "className": "bg-white" },
+        "edit": { "className": "bg-yellow-50" },
+        "read": { "className": "bg-gray-100 text-gray-500", "props": { "disabled": true } },
+        "delete": { "className": "bg-red-100", "props": { "disabled": true } }
+      }
+    },
+    "checkbox": {
+      "shadcn_component": "Checkbox",
+      "default_props": {},
+      "className": "w-5 h-5",
+      "view_modes": {
+        "create": { "className": "" },
+        "edit": { "className": "" },
+        "read": { "props": { "disabled": true } },
+        "delete": { "props": { "disabled": true } }
+      }
+    },
+    "date-picker": {
+      "shadcn_component": "DatePicker",
+      "default_props": {},
+      "className": "w-full",
+      "view_modes": {
+        "create": { "className": "bg-white" },
+        "edit": { "className": "bg-yellow-50" },
+        "read": { "className": "bg-gray-100", "props": { "disabled": true } },
+        "delete": { "className": "bg-red-100", "props": { "disabled": true } }
+      }
+    },
+    "card": {
+      "shadcn_component": "Card",
+      "default_props": {},
+      "className": "p-4 rounded-xl shadow-md bg-white",
+      "view_modes": {
+        "create": { "className": "bg-white" },
+        "edit": { "className": "bg-yellow-50" },
+        "read": { "className": "bg-gray-100" },
+        "delete": { "className": "bg-red-50" }
+      }
+    },
+    "list": {
+      "shadcn_component": "List",
+      "default_props": { "items": [] },
+      "className": "space-y-2",
+      "view_modes": {
+        "read": { "className": "list-disc list-inside" }
+      }
+    },
+    "table": {
+      "shadcn_component": "Table",
+      "default_props": { "columns": [], "rows": [] },
+      "className": "w-full border-collapse",
+      "view_modes": {
+        "read": { "className": "table-auto border border-gray-300" }
+      }
+    }
+  },
+  "validation_rules": {
+    "required": {
+      "className": "border-red-500",
+      "message": "This field is required"
+    },
+    "email": {
+      "pattern": "^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+      "message": "Invalid email format"
+    }
+  },
+  "view_modes": {
+    "create": {
+      "showFields": "*",
+      "readOnly": [],
+      "containerComponent": "card",
+      "containerClass": "p-6 bg-white rounded-xl"
+    },
+    "edit": {
+      "showFields": "*",
+      "readOnly": ["id"],
+      "containerComponent": "card",
+      "containerClass": "p-6 bg-yellow-50 rounded-xl"
+    },
+    "read": {
+      "showFields": "*",
+      "readOnly": "*",
+      "containerComponent": "card",
+      "containerClass": "p-6 bg-gray-100 rounded-xl"
+    },
+    "delete": {
+      "showFields": "*",
+      "readOnly": "*",
+      "containerComponent": "card",
+      "containerClass": "p-6 bg-red-100 rounded-xl"
+    }
+  }
+}
