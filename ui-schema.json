@@ -5,7 +5,7 @@
       "default_props": { "type": "text" },
       "className": "w-full rounded border px-3 py-2",
       "view_modes": {
-        "create": { "className": "bg-white" },
+        "write": { "className": "bg-white" },
         "edit": { "className": "bg-yellow-50" },
         "read": { "className": "bg-gray-100 text-gray-500", "props": { "readOnly": true } },
         "delete": { "className": "bg-red-100", "props": { "readOnly": true } }
@@ -16,7 +16,7 @@
       "default_props": { "type": "password" },
       "className": "w-full border px-3 py-2",
       "view_modes": {
-        "create": { "className": "bg-white" },
+        "write": { "className": "bg-white" },
         "edit": { "className": "bg-yellow-50" },
         "read": { "className": "bg-gray-100 text-gray-400", "props": { "readOnly": true } },
         "delete": { "className": "bg-red-100", "props": { "readOnly": true } }
@@ -27,7 +27,7 @@
       "default_props": { "options": [] },
       "className": "w-full px-2 py-2",
       "view_modes": {
-        "create": { "className": "bg-white" },
+        "write": { "className": "bg-white" },
         "edit": { "className": "bg-yellow-50" },
         "read": { "className": "bg-gray-100 text-gray-500", "props": { "disabled": true } },
         "delete": { "className": "bg-red-100", "props": { "disabled": true } }
@@ -38,7 +38,7 @@
       "default_props": {},
       "className": "w-5 h-5",
       "view_modes": {
-        "create": { "className": "" },
+        "write": { "className": "" },
         "edit": { "className": "" },
         "read": { "props": { "disabled": true } },
         "delete": { "props": { "disabled": true } }
@@ -49,7 +49,7 @@
       "default_props": {},
       "className": "w-full",
       "view_modes": {
-        "create": { "className": "bg-white" },
+        "write": { "className": "bg-white" },
         "edit": { "className": "bg-yellow-50" },
         "read": { "className": "bg-gray-100", "props": { "disabled": true } },
         "delete": { "className": "bg-red-100", "props": { "disabled": true } }
@@ -60,7 +60,7 @@
       "default_props": {},
       "className": "p-4 rounded-xl shadow-md bg-white",
       "view_modes": {
-        "create": { "className": "bg-white" },
+        "write": { "className": "bg-white" },
         "edit": { "className": "bg-yellow-50" },
         "read": { "className": "bg-gray-100" },
         "delete": { "className": "bg-red-50" }
@@ -94,7 +94,7 @@
     }
   },
   "view_modes": {
-    "create": {
+    "write": {
       "showFields": "*",
       "readOnly": [],
       "containerComponent": "card",
