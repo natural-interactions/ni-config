@@ -1,0 +1,122 @@
+{
+  "components": {
+    "input": {
+      "component_name": "TextInput",
+      "default_props": { "keyboardType": "default" },
+      "styleKey": "inputBase",
+      "view_modes": {
+        "write": { "styleKey": "inputWrite" },
+        "edit": { "styleKey": "inputEdit" },
+        "read": { "styleKey": "inputRead", "props": { "editable": false } },
+        "delete": { "styleKey": "inputDelete", "props": { "editable": false } }
+      }
+    },
+    "password": {
+      "component_name": "TextInput",
+      "default_props": { "secureTextEntry": true },
+      "styleKey": "inputBase",
+      "view_modes": {
+        "write": { "styleKey": "inputWrite" },
+        "edit": { "styleKey": "inputEdit" },
+        "read": { "styleKey": "inputRead", "props": { "editable": false } },
+        "delete": { "styleKey": "inputDelete", "props": { "editable": false } }
+      }
+    },
+    "dropdown": {
+      "component_name": "Picker",
+      "default_props": { "items": [] },
+      "styleKey": "dropdownBase",
+      "view_modes": {
+        "write": { "styleKey": "dropdownWrite" },
+        "edit": { "styleKey": "dropdownEdit" },
+        "read": { "styleKey": "dropdownRead", "props": { "enabled": false } },
+        "delete": { "styleKey": "dropdownDelete", "props": { "enabled": false } }
+      }
+    },
+    "checkbox": {
+      "component_name": "Switch",
+      "default_props": {},
+      "styleKey": "checkboxBase",
+      "view_modes": {
+        "write": {},
+        "edit": {},
+        "read": { "props": { "disabled": true } },
+        "delete": { "props": { "disabled": true } }
+      }
+    },
+    "date-picker": {
+      "component_name": "DateTimePicker",
+      "default_props": {},
+      "styleKey": "datePickerBase",
+      "view_modes": {
+        "write": { "styleKey": "datePickerWrite" },
+        "edit": { "styleKey": "datePickerEdit" },
+        "read": { "styleKey": "datePickerRead", "props": { "disabled": true } },
+        "delete": { "styleKey": "datePickerDelete", "props": { "disabled": true } }
+      }
+    },
+    "card": {
+      "component_name": "CardView",
+      "default_props": {},
+      "styleKey": "cardBase",
+      "view_modes": {
+        "write": { "styleKey": "cardWrite" },
+        "edit": { "styleKey": "cardEdit" },
+        "read": { "styleKey": "cardRead" },
+        "delete": { "styleKey": "cardDelete" }
+      }
+    },
+    "list": {
+      "component_name": "FlatList",
+      "default_props": { "data": [], "renderItem": null },
+      "styleKey": "listBase",
+      "view_modes": {
+        "read": { "styleKey": "listRead" }
+      }
+    },
+    "table": {
+      "component_name": "TableView",
+      "default_props": { "columns": [], "rows": [] },
+      "styleKey": "tableBase",
+      "view_modes": {
+        "read": { "styleKey": "tableRead" }
+      }
+    }
+  },
+  "validation_rules": {
+    "required": {
+      "styleKey": "validationRequired",
+      "message": "This field is required"
+    },
+    "email": {
+      "pattern": "^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+      "message": "Invalid email format"
+    }
+  },
+  "view_modes": {
+    "write": {
+      "showFields": "*",
+      "readOnly": [],
+      "containerComponent": "card",
+      "containerStyleKey": "containerWrite"
+    },
+    "edit": {
+      "showFields": "*",
+      "readOnly": ["id"],
+      "containerComponent": "card",
+      "containerStyleKey": "containerEdit"
+    },
+    "read": {
+      "showFields": "*",
+      "readOnly": "*",
+      "containerComponent": "card",
+      "containerStyleKey": "containerRead"
+    },
+    "delete": {
+      "showFields": "*",
+      "readOnly": "*",
+      "containerComponent": "card",
+      "containerStyleKey": "containerDelete"
+    }
+  }
+}
