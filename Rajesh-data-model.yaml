@@ -1,0 +1,246 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001
+      author: dev
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+              - column: { name: id, type: UUID, constraints: { primaryKey: true } }
+              - column: { name: name, type: VARCHAR(100) }
+              - column: { name: email, type: VARCHAR(150), constraints: { unique: true } }
+              - column: { name: role, type: VARCHAR(50) }
+              - column: { name: created_at, type: TIMESTAMP }
+              - column: { name: business_id, type: UUID }
+        - addForeignKeyConstraint:
+            baseTableName: user
+            baseColumnNames: business_id
+            referencedTableName: business_details
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 002
+      author: dev
+      changes:
+        - createTable:
+            tableName: customer
+            columns:
+              - column: { name: id, type: UUID, constraints: { primaryKey: true } }
+              - column: { name: name, type: VARCHAR(100) }
+              - column: { name: email, type: VARCHAR(150), constraints: { unique: true } }
+              - column: { name: phone, type: VARCHAR(20) }
+              - column: { name: created_at, type: TIMESTAMP }
+
+  - changeSet:
+      id: 003
+      author: dev
+      changes:
+        - createTable:
+            tableName: address
+            columns:
+              - column: { name: id, type: UUID, constraints: { primaryKey: true } }
+              - column: { name: street, type: VARCHAR(255) }
+              - column: { name: city, type: VARCHAR(100) }
+              - column: { name: state, type: VARCHAR(100) }
+              - column: { name: country, type: VARCHAR(100) }
+              - column: { name: postal_code, type: VARCHAR(20) }
+              - column: { name: owner_id, type: UUID }
+              - column: { name: owner_type, type: VARCHAR(50) }
+
+  - changeSet:
+      id: 004
+      author: dev
+      changes:
+        - createTable:
+            tableName: product_type
+            columns:
+              - column: { name: id, type: UUID, constraints: { primaryKey: true } }
+              - column: { name: name, type: VARCHAR(100) }
+              - column: { name: description, type: TEXT }
+
+  - changeSet:
+      id: 005
+      author: dev
+      changes:
+        - createTable:
+            tableName: product
+            columns:
+              - column: { name: id, type: UUID, constraints: { primaryKey: true } }
+              - column: { name: name, type: VARCHAR(150) }
+              - column: { name: description, type: TEXT }
+              - column: { name: price, type: DECIMAL(10,2) }
+              - column: { name: type_id, type: UUID }
+        - addForeignKeyConstraint:
+            baseTableName: product
+            baseColumnNames: type_id
+            referencedTableName: product_type
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 006
+      author: dev
+      changes:
+        - createTable:
+            tableName: inventory
+            columns:
+              - column: { name: id, type: UUID, constraints: { primaryKey: true } }
+              - column: { name: product_id, type: UUID }
+              - column: { name: quantity, type: INT }
+              - column: { name: location_address_id, type: UUID }
+        - addForeignKeyConstraint:
+            baseTableName: inventory
+            baseColumnNames: product_id
+            referencedTableName: product
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: inventory
+            baseColumnNames: location_address_id
+            referencedTableName: address
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 007
+      author: dev
+      changes:
+        - createTable:
+            tableName: order
+            columns:
+              - column: { name: id, type: UUID, constraints: { primaryKey: true } }
+              - column: { name: customer_id, type: UUID }
+              - column: { name: staff_id, type: UUID }
+              - column: { name: order_date, type: DATE }
+              - column: { name: total_amount, type: DECIMAL(10,2) }
+        - addForeignKeyConstraint:
+            baseTableName: order
+            baseColumnNames: customer_id
+            referencedTableName: customer
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: order
+            baseColumnNames: staff_id
+            referencedTableName: user
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 008
+      author: dev
+      changes:
+        - createTable:
+            tableName: invoice
+            columns:
+              - column: { name: id, type: UUID, constraints: { primaryKey: true } }
+              - column: { name: order_id, type: UUID }
+              - column: { name: total_due, type: DECIMAL(10,2) }
+              - column: { name: due_date, type: DATE }
+        - addForeignKeyConstraint:
+            baseTableName: invoice
+            baseColumnNames: order_id
+            referencedTableName: order
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 009
+      author: dev
+      changes:
+        - createTable:
+            tableName: payment
+            columns:
+              - column: { name: id, type: UUID, constraints: { primaryKey: true } }
+              - column: { name: invoice_id, type: UUID }
+              - column: { name: amount_paid, type: DECIMAL(10,2) }
+              - column: { name: paid_at, type: TIMESTAMP }
+              - column: { name: received_by, type: UUID }
+              - column: { name: payment_method, type: VARCHAR(50) }
+              - column: { name: note, type: TEXT }
+        - addForeignKeyConstraint:
+            baseTableName: payment
+            baseColumnNames: invoice_id
+            referencedTableName: invoice
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: payment
+            baseColumnNames: received_by
+            referencedTableName: user
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 010
+      author: dev
+      changes:
+        - createTable:
+            tableName: order_item
+            columns:
+              - column: { name: id, type: UUID, constraints: { primaryKey: true } }
+              - column: { name: order_id, type: UUID, constraints: { nullable: false } }
+              - column: { name: product_id, type: UUID, constraints: { nullable: false } }
+              - column: { name: quantity, type: INT }
+              - column: { name: unit_price, type: DECIMAL(10,2) }
+        - addForeignKeyConstraint:
+            baseTableName: order_item
+            baseColumnNames: order_id
+            referencedTableName: order
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: order_item
+            baseColumnNames: product_id
+            referencedTableName: product
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 011
+      author: dev
+      changes:
+        - createTable:
+            tableName: tax
+            columns:
+              - column: { name: id, type: UUID, constraints: { primaryKey: true } }
+              - column: { name: name, type: VARCHAR(100) }
+              - column: { name: rate, type: DECIMAL(5,2) }
+              - column: { name: description, type: TEXT }
+              - column: { name: status, type: VARCHAR(20) }
+              - column: { name: start_date, type: DATE, constraints: { nullable: true } }
+              - column: { name: end_date, type: DATE, constraints: { nullable: true } }
+
+  - changeSet:
+      id: 012
+      author: dev
+      changes:
+        - createTable:
+            tableName: product_tax
+            columns:
+              - column: { name: id, type: UUID, constraints: { primaryKey: true } }
+              - column: { name: product_id, type: UUID, constraints: { nullable: false } }
+              - column: { name: tax_id, type: UUID, constraints: { nullable: false } }
+        - addForeignKeyConstraint:
+            baseTableName: product_tax
+            baseColumnNames: product_id
+            referencedTableName: product
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: product_tax
+            baseColumnNames: tax_id
+            referencedTableName: tax
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 013
+      author: dev
+      changes:
+        - createTable:
+            tableName: business_details
+            columns:
+              - column: { name: id, type: UUID, constraints: { primaryKey: true } }
+              - column: { name: name, type: VARCHAR(150) }
+              - column: { name: logo, type: VARCHAR(255) }
+              - column: { name: address_id, type: UUID }
+              - column: { name: phone, type: VARCHAR(20) }
+              - column: { name: email, type: VARCHAR(150) }
+              - column: { name: website, type: VARCHAR(150) }
+              - column: { name: tax_id, type: VARCHAR(50) }
+              - column: { name: vat_number, type: VARCHAR(50) }
+              - column: { name: gst_number, type: VARCHAR(50) }
+        - addForeignKeyConstraint:
+            baseTableName: business_details
+            baseColumnNames: address_id
+            referencedTableName: address
+            referencedColumnNames: id
