@@ -244,3 +244,51 @@ databaseChangeLog:
             baseColumnNames: address_id
             referencedTableName: address
             referencedColumnNames: id
+
+  - changeSet:
+      id: 014
+      author: dev
+      changes:
+        - createTable:
+            tableName: inventory_order
+            columns:
+              - column: { name: id, type: UUID, constraints: { primaryKey: true } }
+              - column: { name: created_at, type: TIMESTAMP }
+              - column: { name: created_by, type: UUID }
+              - column: { name: supplier_name, type: VARCHAR(150) }
+              - column: { name: status, type: VARCHAR(50) }
+              - column: { name: expected_delivery_date, type: DATE }
+              - column: { name: location_address_id, type: UUID }
+        - addForeignKeyConstraint:
+            baseTableName: inventory_order
+            baseColumnNames: created_by
+            referencedTableName: user
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: inventory_order
+            baseColumnNames: location_address_id
+            referencedTableName: address
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 015
+      author: dev
+      changes:
+        - createTable:
+            tableName: inventory_order_item
+            columns:
+              - column: { name: id, type: UUID, constraints: { primaryKey: true } }
+              - column: { name: inventory_order_id, type: UUID, constraints: { nullable: false } }
+              - column: { name: product_id, type: UUID, constraints: { nullable: false } }
+              - column: { name: quantity, type: INT }
+              - column: { name: unit_cost, type: DECIMAL(10,2) }
+        - addForeignKeyConstraint:
+            baseTableName: inventory_order_item
+            baseColumnNames: inventory_order_id
+            referencedTableName: inventory_order
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: inventory_order_item
+            baseColumnNames: product_id
+            referencedTableName: product
+            referencedColumnNames: id
