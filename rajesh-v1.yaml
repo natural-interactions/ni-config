@@ -1,0 +1,126 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0
+      author: vyankatesh
+      changes:
+        - sql:
+            splitStatements: false
+            sql: CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+  - changeSet:
+      id: 1
+      author: vyankatesh
+      changes:
+        - createTable:
+            tableName: customer
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  defaultValueComputed: "uuid_generate_v4()"
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: phone
+                  type: VARCHAR(20)
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: address
+                  type: TEXT
+
+  - changeSet:
+      id: 2
+      author: vyankatesh
+      changes:
+        - createTable:
+            tableName: invoice
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  defaultValueComputed: "uuid_generate_v4()"
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: customer_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: invoice_date
+                  type: DATE
+              - column:
+                  name: invoice_number
+                  type: VARCHAR(50)
+              - column:
+                  name: number_of_items
+                  type: INTEGER
+              - column:
+                  name: total_amount_without_tax
+                  type: DECIMAL(10,2)
+              - column:
+                  name: total_tax_amount
+                  type: DECIMAL(10,2)
+              - column:
+                  name: total_amount
+                  type: DECIMAL(10,2)
+        - addForeignKeyConstraint:
+            baseTableName: invoice
+            baseColumnNames: customer_id
+            referencedTableName: customer
+            referencedColumnNames: id
+            constraintName: fk_invoice_customer
+
+  - changeSet:
+      id: 3
+      author: vyankatesh
+      changes:
+        - createTable:
+            tableName: invoice_items
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  defaultValueComputed: "uuid_generate_v4()"
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: invoice_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: item_name
+                  type: VARCHAR(255)
+              - column:
+                  name: quantity
+                  type: INTEGER
+              - column:
+                  name: unit_price
+                  type: DECIMAL(10,2)
+              - column:
+                  name: total_price_without_tax
+                  type: DECIMAL(10,2)
+              - column:
+                  name: tax_percent
+                  type: DECIMAL(5,2)
+              - column:
+                  name: tax_amount
+                  type: DECIMAL(10,2)
+              - column:
+                  name: total_amount
+                  type: DECIMAL(10,2)
+        - addForeignKeyConstraint:
+            baseTableName: invoice_items
+            baseColumnNames: invoice_id
+            referencedTableName: invoice
+            referencedColumnNames: id
+            constraintName: fk_invoice_items_invoice
