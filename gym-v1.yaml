@@ -9,7 +9,7 @@ databaseChangeLog:
               - column:
                   name: id
                   type: UUID
-                  defaultValueComputed: "uuid_generate_v4()"
+                  defaultValueComputed: "gen_random_uuid()"
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -18,9 +18,10 @@ databaseChangeLog:
                   type: VARCHAR(255)
                   constraints:
                     nullable: false
+                    unique: true
               - column:
                   name: mobile_number
-                  type: VARCHAR(20)
+                  type: VARCHAR(15)
               - column:
                   name: first_name
                   type: VARCHAR(100)
@@ -44,7 +45,7 @@ databaseChangeLog:
               - column:
                   name: id
                   type: UUID
-                  defaultValueComputed: "uuid_generate_v4()"
+                  defaultValueComputed: "gen_random_uuid()"
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -54,7 +55,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: datetime
+                  name: recorded_at
                   type: TIMESTAMP
               - column:
                   name: weight
@@ -82,7 +83,7 @@ databaseChangeLog:
               - column:
                   name: id
                   type: UUID
-                  defaultValueComputed: "uuid_generate_v4()"
+                  defaultValueComputed: "gen_random_uuid()"
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -92,7 +93,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: datetime
+                  name: recorded_at
                   type: TIMESTAMP
               - column:
                   name: exercise
@@ -126,7 +127,7 @@ databaseChangeLog:
               - column:
                   name: id
                   type: UUID
-                  defaultValueComputed: "uuid_generate_v4()"
+                  defaultValueComputed: "gen_random_uuid()"
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -139,14 +140,14 @@ databaseChangeLog:
                   name: exercise
                   type: VARCHAR(100)
               - column:
-                  name: datetime
+                  name: recorded_at
                   type: TIMESTAMP
               - column:
                   name: duration
                   type: INT # duration in minutes
               - column:
                   name: distance
-                  type: DECIMAL(6,2)
+                  type: DECIMAL(6,2) # e.g., kilometers
               - column:
                   name: avg_heart_rate
                   type: INT
