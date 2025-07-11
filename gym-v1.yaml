@@ -9,7 +9,7 @@ databaseChangeLog:
               - column:
                   name: id
                   type: UUID
-                  defaultValueComputed: "gen_random_uuid()"
+                  defaultValueComputed: "uuid_generate_v4()"
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -21,7 +21,9 @@ databaseChangeLog:
                     unique: true
               - column:
                   name: mobile_number
-                  type: VARCHAR(15)
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
               - column:
                   name: first_name
                   type: VARCHAR(100)
@@ -45,7 +47,7 @@ databaseChangeLog:
               - column:
                   name: id
                   type: UUID
-                  defaultValueComputed: "gen_random_uuid()"
+                  defaultValueComputed: "uuid_generate_v4()"
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -55,7 +57,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: recorded_at
+                  name: datetime
                   type: TIMESTAMP
               - column:
                   name: weight
@@ -71,10 +73,30 @@ databaseChangeLog:
             baseColumnNames: user_id
             referencedTableName: user
             referencedColumnNames: id
-            constraintName: fk_health_info_user
+            constraintName: fk_health_user
 
   - changeSet:
       id: 3
+      author: vyankatesh
+      changes:
+        - createTable:
+            tableName: exercise
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  defaultValueComputed: "uuid_generate_v4()"
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 4
       author: vyankatesh
       changes:
         - createTable:
@@ -83,7 +105,7 @@ databaseChangeLog:
               - column:
                   name: id
                   type: UUID
-                  defaultValueComputed: "gen_random_uuid()"
+                  defaultValueComputed: "uuid_generate_v4()"
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -93,20 +115,22 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: recorded_at
+                  name: exercise_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: datetime
                   type: TIMESTAMP
               - column:
-                  name: exercise
-                  type: VARCHAR(100)
-              - column:
                   name: set_number
-                  type: INT
+                  type: INTEGER
               - column:
                   name: weight
                   type: DECIMAL(5,2)
               - column:
                   name: reps
-                  type: INT
+                  type: INTEGER
               - column:
                   name: comments
                   type: TEXT
@@ -115,10 +139,16 @@ databaseChangeLog:
             baseColumnNames: user_id
             referencedTableName: user
             referencedColumnNames: id
-            constraintName: fk_strength_training_user
+            constraintName: fk_strength_user
+        - addForeignKeyConstraint:
+            baseTableName: strength_training
+            baseColumnNames: exercise_id
+            referencedTableName: exercise
+            referencedColumnNames: id
+            constraintName: fk_strength_exercise
 
   - changeSet:
-      id: 4
+      id: 5
       author: vyankatesh
       changes:
         - createTable:
@@ -127,7 +157,7 @@ databaseChangeLog:
               - column:
                   name: id
                   type: UUID
-                  defaultValueComputed: "gen_random_uuid()"
+                  defaultValueComputed: "uuid_generate_v4()"
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -137,26 +167,34 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: exercise
-                  type: VARCHAR(100)
+                  name: exercise_id
+                  type: UUID
+                  constraints:
+                    nullable: false
               - column:
-                  name: recorded_at
+                  name: datetime
                   type: TIMESTAMP
               - column:
                   name: duration
-                  type: INT # duration in minutes
+                  type: INTEGER  # in minutes
               - column:
                   name: distance
-                  type: DECIMAL(6,2) # e.g., kilometers
+                  type: DECIMAL(6,2)  # in kilometers or miles
               - column:
-                  name: avg_heart_rate
-                  type: INT
+                  name: average_heart_rate
+                  type: INTEGER
               - column:
                   name: calories
-                  type: INT
+                  type: INTEGER
         - addForeignKeyConstraint:
             baseTableName: cardio
             baseColumnNames: user_id
             referencedTableName: user
             referencedColumnNames: id
             constraintName: fk_cardio_user
+        - addForeignKeyConstraint:
+            baseTableName: cardio
+            baseColumnNames: exercise_id
+            referencedTableName: exercise
+            referencedColumnNames: id
+            constraintName: fk_cardio_exercise
